@@ -2,5 +2,8 @@
 2019.2
 Nov  6 2019
 21:57:16
-C:/Users/Shell/Documents/GitHub/MIET_FPGA_practicum/lab2/rtl/counter.v,1588882679,verilog,,,,counter,,,,,,,,
-C:/Users/Shell/Documents/GitHub/MIET_FPGA_practicum/lab2/tmp/Lab_2.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,
+C:/Users/Shell/Desktop/XX Plis/rtl/counter.v,1588887485,verilog,,C:/Users/Shell/Desktop/XX Plis/rtl/main.v,,counter,,,,,,,,
+C:/Users/Shell/Desktop/XX Plis/rtl/main.v,1588888353,verilog,,C:/Users/Shell/Desktop/XX Plis/rtl/register.v,,main,,,,,,,,
+C:/Users/Shell/Desktop/XX Plis/rtl/register.v,1588886653,verilog,,C:/Users/Shell/Desktop/XX Plis/tb/lab2_tb.v,,register,,,,,,,,
+C:/Users/Shell/Desktop/XX Plis/tb/lab2_tb.v,1588883566,verilog,,,,main_tb,,,,,,,,
+C:/Users/Shell/Desktop/XX Plis/tmp/Lab_2.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,
