@@ -1,30 +1,31 @@
 `timescale 1ns / 1ps
 
-module main_tb(
+
+module tb_counter(
     );
     
 localparam CLK_FREQ = 50;
 localparam CLK_SEMIPERIOD = 1000 / CLK_FREQ /2;
     
-reg         clk;
-reg  [9:0]  data_i;
-reg  [1:0]  key;
-wire [9:0]  ledr;
+reg         clk100_i;
+reg  [9:0]  sw_i;
+wire [1:0]  key;
+wire [9:0]  ledr_o;
 wire [7:0]  hex; 
 
 main DUT(
-  .clk_i ( clk ),
-  .key_i ( key ),
-  .sw_i   ( data_i ),
-  .ledr_o ( ledr ),
-  .hex_on ( hex )
+  .clk100_i ( clk100_i ),
+  .key_i    ( key ),
+  .sw_i     ( sw_i ),
+  .ledr_o   ( ledr_o ),
+  .hex_on   ( hex )
 );
 
 //Clock gen
 initial begin
-  clk = 1'b1;
+  clk100_i = 1'b1;
   forever begin
-    #CLK_SEMIPERIOD clk = ~clk;
+    #CLK_SEMIPERIOD clk100_i = ~clk100_i;
   end
 end
     
@@ -33,7 +34,7 @@ end
 initial begin
   forever begin
     #(4*CLK_SEMIPERIOD);
-    data_i = $random();
+    sw_i = $random();
   end
 end
 

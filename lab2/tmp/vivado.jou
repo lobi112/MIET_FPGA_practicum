@@ -2,28 +2,77 @@
 # Vivado v2019.2 (64-bit)
 # SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
 # IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
-# Start of session at: Fri May  8 00:40:16 2020
-# Process ID: 24396
-# Current directory: C:/Users/Shell/Desktop/XX Plis/tmp
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent24268 C:\Users\Shell\Desktop\XX Plis\tmp\Lab_2.xpr
-# Log file: C:/Users/Shell/Desktop/XX Plis/tmp/vivado.log
-# Journal file: C:/Users/Shell/Desktop/XX Plis/tmp\vivado.jou
+# Start of session at: Mon May 11 19:14:12 2020
+# Process ID: 51804
+# Current directory: C:/Users/Shell/Desktop/Lab_2_v3/tmp
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent50080 C:\Users\Shell\Desktop\Lab_2_v3\tmp\Lab_2_v3.xpr
+# Log file: C:/Users/Shell/Desktop/Lab_2_v3/tmp/vivado.log
+# Journal file: C:/Users/Shell/Desktop/Lab_2_v3/tmp\vivado.jou
 #-----------------------------------------------------------
 start_gui
-open_project {C:/Users/Shell/Desktop/XX Plis/tmp/Lab_2.xpr}
+open_project C:/Users/Shell/Desktop/Lab_2_v3/tmp/Lab_2_v3.xpr
 update_compile_order -fileset sources_1
 launch_simulation
-source main_tb.tcl
-save_wave_config {C:/Users/Shell/Desktop/XX Plis/tmp/main_tb_behav.wcfg}
-add_files -fileset sim_1 -norecurse {{C:/Users/Shell/Desktop/XX Plis/tmp/main_tb_behav.wcfg}}
-set_property xsim.view {{C:/Users/Shell/Desktop/XX Plis/tmp/main_tb_behav.wcfg}} [get_filesets sim_1]
+source counter_tb.tcl
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
 close_sim
 launch_simulation
-open_wave_config {C:/Users/Shell/Desktop/XX Plis/tmp/main_tb_behav.wcfg}
-source main_tb.tcl
+source counter_tb.tcl
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+save_wave_config {C:/Users/Shell/Desktop/Lab_2_v3/tmp/counter_tb_behav.wcfg}
+add_files -fileset sim_1 -norecurse C:/Users/Shell/Desktop/Lab_2_v3/tmp/counter_tb_behav.wcfg
+set_property xsim.view C:/Users/Shell/Desktop/Lab_2_v3/tmp/counter_tb_behav.wcfg [get_filesets sim_1]
 close_sim
 launch_simulation
-open_wave_config {C:/Users/Shell/Desktop/XX Plis/tmp/main_tb_behav.wcfg}
-source main_tb.tcl
-save_wave_config {C:/Users/Shell/Desktop/XX Plis/tmp/main_tb_behav.wcfg}
+open_wave_config C:/Users/Shell/Desktop/Lab_2_v3/tmp/counter_tb_behav.wcfg
+source counter_tb.tcl
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+reset_simulation -simset sim_1 -mode post-synthesis -type timing
+close_sim
+reset_simulation -simset sim_1 -mode post-synthesis -type timing
+reset_simulation -simset sim_1 -mode post-synthesis -type timing
+reset_simulation -simset sim_1 -mode behavioral
+launch_simulation
+open_wave_config C:/Users/Shell/Desktop/Lab_2_v3/tmp/counter_tb_behav.wcfg
+source counter_tb.tcl
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
 close_sim
