@@ -38,11 +38,11 @@ module counter_tb(
   end
   
   initial begin
-    key_i [1] = 1'b0;
-    #(2*CLK_SEMIPERIOD)
     key_i [1] = 1'b1;
     #(2*CLK_SEMIPERIOD)
     key_i [1] = 1'b0;
+    #(2*CLK_SEMIPERIOD)
+    key_i [1] = 1'b1;
     forever begin
       #(22*CLK_SEMIPERIOD);
       key_i[1] = ~key_i[1];
@@ -52,7 +52,7 @@ module counter_tb(
   end
   
   initial begin
-    key_i [0] = 1'b0;
+    key_i [0] = 1'b1;
     forever begin
       #(7*CLK_SEMIPERIOD);
       key_i[0] = ~key_i[0];
