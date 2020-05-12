@@ -2,13 +2,13 @@
 
 
 module counter(
-  input             clk100_i,
-  input             rstn_i,
-  input      [9:0]  sw_i,
-  input      [1:0]  key_i,
-  output     [9:0]  ledr_o,
-  output     [6:0]  hex1_o,
-  output     [6:0]  hex0_o
+  input          clk100_i,
+  input          rstn_i,
+  input   [9:0]  sw_i,
+  input   [1:0]  key_i,
+  output  [9:0]  ledr_o,
+  output  [6:0]  hex1_o,
+  output  [6:0]  hex0_o
 );
   reg  [6:0]  hex0;
   reg  [6:0]  hex1;
@@ -19,18 +19,17 @@ module counter(
   wire        push_b0;
   wire        push_b1;
   
-  assign push_b1 = ~key_i[1];
-  
   assign ledr_o = data;
   assign hex0_o = hex0;
   assign hex1_o = hex1;
   
   always @( posedge clk100_i ) begin
-    sync[0] <= key_i[0];
+    sync[0] <= !key_i[0];
     sync[1] <= sync[0];
     sync[2] <= sync[1];
   end
   
+  assign push_b1 = key_i[1];
   assign push_b0 = ~sync[2] & sync[1];
   
   
