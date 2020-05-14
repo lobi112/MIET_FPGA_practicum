@@ -6,7 +6,7 @@ module counter_tb(
     localparam CLK_SEMIPERIOD = (1000/CLK_FREQ_MHZ)/2;
     
   reg          clk100_i;
-  reg   [9:0]  sw_i;
+  reg   [13:0]  sw_i;
   reg   [1:0]  key_i;
   wire  [9:0]  ledr_o;
   wire  [6:0]  hex0_o;
@@ -29,11 +29,11 @@ module counter_tb(
   end
 
   initial begin
-    sw_i = 10'b0;
+    sw_i = 14'b00110000000111;
     repeat(40) 
     begin
       #(8*CLK_SEMIPERIOD);
-      sw_i = $random();
+      sw_i[9:0] = sw_i[9:0]+1;
     end
   end
   
