@@ -1,3 +1,4 @@
+
 module stopwatch(
   input        clk100_i,
   input        rstn_i,
@@ -42,16 +43,6 @@ module stopwatch(
 //END_SYNCHRONIZER
 
 
-//DEVISE_STOPPED
-  always @( posedge clk100_i ) begin
-  if ( push_start_stop ) 
-    device_work <= ~device_work;
-  end
-  
-  assign device_stopped = ~device_work;
-//END_DEVISE_STOPPED
-
-
 //COUNTER
 //main pulse counter
   localparam PULSE_W = 20'd0;
@@ -78,7 +69,7 @@ module stopwatch(
       end
     else if ( device_work | hundredth_second_passed ) 
     begin
-      if ( hundredth_second_passed )
+      if ( hundredth_second_passed && device_work )
         pulse_counter <= 0;
       else 
         pulse_counter <= pulse_counter + 1;
@@ -89,7 +80,7 @@ module stopwatch(
   always @( posedge clk100_i or negedge rstn_i ) begin
     if ( !rstn_i ) 
       hundredth_counter <= 0;
-    else if ( hundredth_second_passed ) 
+    else if ( hundredth_second_passed && device_work ) 
       begin
         if ( tenth_second_passed )
           hundredth_counter <= 0;
@@ -102,7 +93,7 @@ end
   always @( posedge clk100_i or negedge rstn_i ) begin
     if ( !rstn_i ) 
       tenth_counter <= 0;
-    else if ( tenth_second_passed ) 
+    else if ( tenth_second_passed && device_work ) 
       begin
         if ( second_passed )
           tenth_counter <= 0;
@@ -117,7 +108,7 @@ end
       second_counter <= 0;
     else if ( second_passed ) 
       begin
-        if ( ten_second_passed )
+        if ( ten_second_passed && device_work )
           second_counter <= 0;
         else
           second_counter <= second_counter + 1;
@@ -128,9 +119,9 @@ end
   always @( posedge clk100_i or negedge rstn_i ) begin
     if ( !rstn_i ) 
       ten_second_counter <= 0;
-    else if ( ten_second_passed ) 
+    else if ( ten_second_passed && device_work ) 
       begin
-        if ( ten_second_counter == 4'd9 )
+        if ( ten_second_counter == COUNT_M )
           ten_second_counter <= 0;
         else
           ten_second_counter <= ten_second_counter + 1;
@@ -141,22 +132,62 @@ end
 
 //AUTOMAT
 
-//Set
-  reg  [1:0]  hex_select         = 2'b0;
+  localparam STATE_default     = 1'd0;
+  localparam STATE_set         = 1'd1;
+  reg        watch_state       = STATE_default;
   
+  localparam SELECT_hundredth  = 3'd0;
+  localparam SELECT_tenth      = 3'd1;
+  localparam SELECT_second     = 3'd2;
+  localparam SELECT_ten_second = 3'd3;
+  reg [2:0]  hex_select        = SELECT_hundredth;
+  
+//set and change_set
   always @( posedge clk100_i ) begin
-      if ( push_set ) 
-        hex_select <= hex_select + 1;
-      if ( push_change ) begin
-        case (hex_select)
-          2'd0 : hundredth_counter  <= hundredth_counter  + 1;
-          2'd1 : tenth_counter      <= tenth_counter      + 1;
-          2'd2 : second_counter     <= second_counter     + 1;
-          2'd3 : ten_second_counter <= ten_second_counter + 1;
-        endcase
-      end
+    case ( watch_state )
+      STATE_default : if( push_set && device_work ) begin
+                        watch_state   <= STATE_set;
+                        hex_select  <= SELECT_hundredth;
+                        device_work <= ~device_work;
+                      end
+                        
+      STATE_set     : if(!rstn_i)
+                        watch_state  <= STATE_default;
+                      else if( push_set && ( hex_select == SELECT_ten_second ) )
+                        hex_select <= SELECT_hundredth;
+                      else
+                        hex_select <= hex_select + 1;
+    endcase
+  end
+  
+//change
+  always @( posedge clk100_i ) begin
+    if ( push_change && watch_state ) begin
+      case (hex_select)
+        SELECT_hundredth  : if( ~( hundredth_counter  == COUNT_M ) )
+                              hundredth_counter  <= hundredth_counter  + 1;
+        SELECT_tenth      : if( ~( tenth_counter      == COUNT_M ) )
+                              tenth_counter      <= tenth_counter      + 1;
+        SELECT_second     : if( ~( second_counter     == COUNT_M ) )
+                              second_counter     <= second_counter     + 1;
+        SELECT_ten_second : if( ~( ten_second_counter == COUNT_M ) )
+                              ten_second_counter <= ten_second_counter + 1;
+      endcase
+    end
   end
 //END_AUTOMAT
+
+
+//DEVISE_STOPPED
+  always @( posedge clk100_i ) begin
+    if ( push_start_stop ) begin
+      device_work <= ~device_work;
+      watch_state   <= STATE_set;
+    end
+  end
+  
+  assign device_stopped = ~device_work;
+//END_DEVISE_STOPPED
 
 
 //DECODER

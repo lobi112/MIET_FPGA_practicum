@@ -2,8 +2,8 @@
 
 
 module decoder(
-  input       [3:0] counter_i,
-  output reg  [3:0] hex_o
+  input       [6:0] counter_i,
+  output reg  [6:0] hex_o
 );
   
   always @( * ) begin
